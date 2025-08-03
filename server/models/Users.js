@@ -17,6 +17,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [8, "Password must be at least 8 characters"],
+      validate: {
+        validator: function (value) {
+          return (
+            /[a-z]/.test(value) &&
+            /[A-Z]/.test(value) &&
+            /\d/.test(value) &&
+            /[@$!%*?&]/.test(value)
+          );
+        },
+        message:
+          "Password must include uppercase, lowercase, number, and special character",
+      },
     },
     role: {
       type: String,
